@@ -1,0 +1,52 @@
+type ItuneResponseEpisode = {
+  trackId?: number;
+  id: string;
+  previewUrl: string;
+  episodeUrl: string;
+  episodeGuid: string;
+  genres: { name: string; id: string }[];
+  feedUrl: string;
+  trackName: string;
+  shortDescription: string;
+  releaseDate: Date;
+  closedCaptioning: string;
+  collectionId: string;
+  collectionName: string;
+  kind: string;
+  wrapperType: string;
+  description: string;
+  country: string;
+  artistViewUrl: string;
+  collectionViewUrl: string;
+  trackViewUrl: string;
+  artworkUrl60: string;
+  artworkUrl600: string;
+  artworkUrl160: string;
+  episodeFileExtension: string;
+  episodeContentType: string;
+  searchedKeywords: string[];
+  trackTimeMillis?: number; // Optional, if not present in the API response
+};
+
+type ItuneResponsePodcast = {
+  id: string;
+  wrapperType: string;
+  kind: string;
+  collectionId?: number;
+  trackId?: number;
+  artistName: string;
+  collectionName: string;
+  trackName: string;
+  collectionCensoredName: string;
+  collectionViewUrl: string;
+  feedUrl: string;
+  trackViewUrl: string;
+  artworkUrl30: string;
+  artworkUrl60: string;
+  artworkUrl100: string;
+  releaseDate: Date;
+  country: string;
+  primaryGenreName: string;
+  artworkUrl600: string;
+  searchedKeywords: string[];
+};

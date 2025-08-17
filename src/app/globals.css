@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+@theme {
+  --color-100: #151422;
+  --color-200: #101017;
+}
+
+/* Add IBM Plex Sans Arabic fonts */
+@font-face {
+  font-family: "IBM Plex Sans Arabic";
+  src: url("/fonts/IBM-Plex-Sans-Arabic/IBMPlexSansArabic-Regular.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "IBM Plex Sans Arabic";
+  src: url("/fonts/IBM-Plex-Sans-Arabic/IBMPlexSansArabic-Bold.otf") format("opentype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "IBM Plex Sans Arabic";
+  src: url("/fonts/IBM-Plex-Sans-Arabic/IBMPlexSansArabic-Light.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "IBM Plex Sans Arabic";
+  src: url("/fonts/IBM-Plex-Sans-Arabic/IBMPlexSansArabic-Medium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "IBM Plex Sans Arabic";
+  src: url("/fonts/IBM-Plex-Sans-Arabic/IBMPlexSansArabic-SemiBold.otf") format("opentype");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "IBM Plex Sans Arabic";
+  src: url("/fonts/IBM-Plex-Sans-Arabic/IBMPlexSansArabic-ExtraLight.otf") format("opentype");
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "IBM Plex Sans Arabic";
+  src: url("/fonts/IBM-Plex-Sans-Arabic/IBMPlexSansArabic-Thin.otf") format("opentype");
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "IBM Plex Sans Arabic";
+  src: url("/fonts/IBM-Plex-Sans-Arabic/IBMPlexSansArabic-Text.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+html,
+body {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  font-family: "IBM Plex Sans Arabic", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  letter-spacing: -0.5px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+}
+
+/* fix swiper issue when inside flex  */
+/* https://stackoverflow.com/questions/53022091/why-javascript-sliders-break-my-css-flex-layout */
+main {
+  min-width: 0;
+}
+button {
+  cursor: pointer;
+}
