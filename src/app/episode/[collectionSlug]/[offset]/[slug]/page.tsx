@@ -3,6 +3,7 @@ import React from "react";
 import { notFound } from "next/navigation";
 import { RssIcon, AppleIcon, DownloadIcon, Clock10Icon } from "lucide-react";
 import Image from "next/image";
+import Head from "next/head";
 import PlayButton from "@/components/PlayButton";
 import { searchPodcastEpisodes } from "@/utils/search";
 import getTime from "@/lib/getTime";
@@ -32,78 +33,90 @@ const Page = async ({ params }: { params: Promise<{ collectionSlug: string; offs
   }
 
   return (
-    <div className="container p-4 flex flex-col gap-5">
-      <div className="relative w-full sm:w-fit">
-        <Image
-          src={episode.artworkUrl600}
-          alt={episode.collectionName || "Podcast artwork"}
-          className="rounded-lg  w-full h-full sm:size-60 object-cover"
-          width={200}
-          height={200}
-          loading="lazy"
-        />
-        <div className="absolute inset-0 flex items-center justify-center ">
-          <PlayButton
-            episode={{
-              id: episode.trackId.toString(),
-              title: episode.trackName,
-              podcast: episode.collectionName,
-              image: episode.artworkUrl600,
-              description: episode.description,
-              date: episode.releaseDate,
-              duration: episode.trackTimeMillis ? episode.trackTimeMillis.toFixed(0) : "0",
-              podcastId: episode.collectionId.toString(),
-              offset: offset ? parseInt(offset) : 0,
-              previewUrl: episode.previewUrl || episode.previewUrl,
-            }}
-            big
+    <>
+      <Head>
+        <title>
+          {episode.trackName} - {episode.collectionName}
+        </title>
+        <meta name="description" content={episode.description || "لايوجد وصف حالياً!"} />
+        <meta property="og:title" content={episode.trackName} />
+        <meta property="og:description" content={episode.description || "لايوجد وصف حالياً!"} />
+        <meta property="og:image" content={episode.artworkUrl600} />
+        <meta property="og:type" content="website" />
+      </Head>
+      <div className="container p-4 flex flex-col gap-5">
+        <div className="relative w-full sm:w-fit">
+          <Image
+            src={episode.artworkUrl600}
+            alt={episode.collectionName || "Podcast artwork"}
+            className="rounded-lg  w-full h-full sm:size-60 object-cover"
+            width={200}
+            height={200}
+            loading="lazy"
           />
+          <div className="absolute inset-0 flex items-center justify-center ">
+            <PlayButton
+              episode={{
+                id: episode.trackId.toString(),
+                title: episode.trackName,
+                podcast: episode.collectionName,
+                image: episode.artworkUrl600,
+                description: episode.description,
+                date: episode.releaseDate,
+                duration: episode.trackTimeMillis ? episode.trackTimeMillis.toFixed(0) : "0",
+                podcastId: episode.collectionId.toString(),
+                offset: offset ? parseInt(offset) : 0,
+                previewUrl: episode.previewUrl || episode.previewUrl,
+              }}
+              big
+            />
+          </div>
+        </div>
+        <div className="flex flex-col gap-5">
+          <h1 className="text-4xl font-bold ">{episode.trackName}</h1>
+          <h3 className="text-gray-500 mb-4 flex gap-2">
+            <Clock10Icon />
+            {getTime(episode.trackTimeMillis ? episode.trackTimeMillis : 0)} •{" "}
+            {new Date(episode.releaseDate).toLocaleDateString("ar-SA", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+          </h3>
+          <p className="text-gray-600 mb-2 text-xl sm:text-2xl">{episode.description || "لايوجد وصف حالياً!"}</p>
+          <div className="flex gap-4 mb-5">
+            {episode.feedUrl && (
+              <a
+                href={episode.feedUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-pink-400 flex items-center gap-2"
+              >
+                <RssIcon className="w-5 h-5" />
+                رابط RSS
+              </a>
+            )}
+            {episode.trackViewUrl && (
+              <a
+                href={episode.trackViewUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-pink-400 flex items-center gap-2"
+              >
+                <AppleIcon className="w-5 h-5" />
+                آيتونز
+              </a>
+            )}
+            {episode.previewUrl && (
+              <a href={episode.previewUrl} download className="text-pink-400 flex items-center gap-2">
+                <DownloadIcon className="w-5 h-5" />
+                تنزيل
+              </a>
+            )}
+          </div>
         </div>
       </div>
-      <div className="flex flex-col gap-5">
-        <h1 className="text-4xl font-bold ">{episode.trackName}</h1>
-        <h3 className="text-gray-500 mb-4 flex gap-2">
-          <Clock10Icon />
-          {getTime(episode.trackTimeMillis ? episode.trackTimeMillis : 0)} •{" "}
-          {new Date(episode.releaseDate).toLocaleDateString("ar-SA", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}
-        </h3>
-        <p className="text-gray-600 mb-2 text-xl sm:text-2xl">{episode.description || "لايوجد وصف حالياً!"}</p>
-        <div className="flex gap-4 mb-5">
-          {episode.feedUrl && (
-            <a
-              href={episode.feedUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-pink-400 flex items-center gap-2"
-            >
-              <RssIcon className="w-5 h-5" />
-              رابط RSS
-            </a>
-          )}
-          {episode.trackViewUrl && (
-            <a
-              href={episode.trackViewUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-pink-400 flex items-center gap-2"
-            >
-              <AppleIcon className="w-5 h-5" />
-              آيتونز
-            </a>
-          )}
-          {episode.previewUrl && (
-            <a href={episode.previewUrl} download className="text-pink-400 flex items-center gap-2">
-              <DownloadIcon className="w-5 h-5" />
-              تنزيل
-            </a>
-          )}
-        </div>
-      </div>
-    </div>
+    </>
   );
 };
 

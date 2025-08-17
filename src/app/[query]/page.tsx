@@ -1,4 +1,5 @@
 import React, { Suspense } from "react";
+import Head from "next/head";
 
 import Podcasts from "@/components/Podcasts";
 
@@ -22,6 +23,13 @@ export default async function Page(props: Iprops) {
 
   return (
     <>
+      <Head>
+        <title>{`نتائج البحث عن "${queryDecoded}"`}</title>
+        <meta name="description" content={`استكشف البودكاست والحلقات المتعلقة بـ "${queryDecoded}".`} />
+        <meta name="keywords" content={`بودكاست, حلقات, ${queryDecoded}`} />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </Head>
+
       <Suspense fallback={<ResultsSkeleton />}>
         <FetchingData
           apiPromies={async () => {
