@@ -11,8 +11,8 @@ import { notFound } from "next/navigation";
 export const revalidate = 3600;
 export const dynamic = "force-static";
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const slug = params.slug.trim().replace(/-/g, " ");
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const slug = (await params).slug.trim().replace(/-/g, " ");
   let podcast: ItunesResponsePodcast | undefined;
 
   try {
@@ -41,8 +41,8 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-const Page = async ({ params }: { params: { slug: string } }) => {
-  const slug = params.slug.trim().replace(/-/g, " ");
+const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
+  const slug = (await params).slug.trim().replace(/-/g, " ");
   let podcast: ItunesResponsePodcast | undefined;
   let episodes: ItunesResponseEpisode[] = [];
 

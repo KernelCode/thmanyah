@@ -14,9 +14,9 @@ export const dynamic = "force-static";
 export async function generateMetadata({
   params,
 }: {
-  params: { collectionSlug: string; offset: string; slug: string };
+  params: Promise<{ collectionSlug: string; offset: string; slug: string }>;
 }): Promise<Metadata> {
-  const { collectionSlug, offset, slug } = params;
+  const { collectionSlug, offset, slug } = await params;
   const trackIdMatched = decodeURIComponent(slug).match(/(\d+)$/);
   const trackId = trackIdMatched ? parseInt(trackIdMatched[0], 10) : null;
 
@@ -48,8 +48,8 @@ export async function generateMetadata({
   };
 }
 
-const Page = async ({ params }: { params: { collectionSlug: string; offset: string; slug: string } }) => {
-  const { collectionSlug, offset, slug } = params;
+const Page = async ({ params }: { params: Promise<{ collectionSlug: string; offset: string; slug: string }> }) => {
+  const { collectionSlug, offset, slug } = await params;
   const trackIdMatched = decodeURIComponent(slug).match(/(\d+)$/);
   const trackId = trackIdMatched ? parseInt(trackIdMatched[0], 10) : null;
 
