@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import Head from "next/head";
+import { Metadata } from "next";
 
 import Podcasts from "@/components/Podcasts";
 
@@ -16,6 +16,12 @@ type Iprops = {
 export const revalidate = 3600;
 export const dynamic = "force-static";
 
+export const metadata: Metadata = {
+  title: "تجربة ثمانية",
+  description: "استكشف البودكاست والحلقات على تجربة ثمانية.",
+  keywords: "بودكاست, حلقات, ثمانية, تجربة",
+};
+
 export default async function Page(props: Iprops) {
   const params = await props.params;
   const { query } = await params;
@@ -23,13 +29,6 @@ export default async function Page(props: Iprops) {
 
   return (
     <>
-      <Head>
-        <title>{`نتائج البحث عن "${queryDecoded}"`}</title>
-        <meta name="description" content={`استكشف البودكاست والحلقات المتعلقة بـ "${queryDecoded}".`} />
-        <meta name="keywords" content={`بودكاست, حلقات, ${queryDecoded}`} />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      </Head>
-
       <Suspense fallback={<ResultsSkeleton />}>
         <FetchingData
           apiPromies={async () => {

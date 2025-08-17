@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import Head from "next/head";
+import type { Metadata } from "next";
 
 import Podcasts from "@/components/Podcasts";
 
@@ -14,17 +14,16 @@ import ErrorBoundary from "@/components/ErrorFallback";
 export const revalidate = 3600;
 export const dynamic = "force-static";
 
+export const metadata: Metadata = {
+  title: "تجربة ثمانية",
+  description: "استكشف البودكاست والحلقات على تجربة ثمانية.",
+
+  keywords: "بودكاست, حلقات, ثمانية, تجربة",
+};
+
 export default async function Page() {
   return (
     <>
-      <Head>
-        <title>تجربة ثمانية</title>
-        <meta name="description" content="استكشف البودكاست والحلقات على تجربة ثمانية." />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta charSet="UTF-8" />
-        <meta name="keywords" content="بودكاست, حلقات, ثمانية, تجربة" />
-        <meta name="author" content="فريق ثمانية" />
-      </Head>
       <ErrorBoundary>
         <Suspense fallback={<ResultsSkeleton />}>
           <FetchingData
