@@ -70,7 +70,7 @@ const Page = async ({ params }: { params: Promise<{ collectionSlug: string; offs
   }
 
   return (
-    <div className="container p-4 flex flex-col gap-5">
+    <div className=" p-4 flex flex-col gap-5">
       <div className="relative w-full sm:w-fit">
         <Image
           src={episode.artworkUrl600}

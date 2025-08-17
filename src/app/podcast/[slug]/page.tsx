@@ -61,7 +61,7 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
   }
 
   return (
-    <div className="container p-4">
+    <div className=" p-4">
       <h1 className="text-4xl font-bold mb-4">{podcast.collectionName || "Unknown Podcast"}</h1>
       <p className="text-gray-600 mb-2">{podcast.artistName || "Unknown Artist"}</p>
       <Image
