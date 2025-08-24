@@ -7,34 +7,34 @@ const LIMIT = 10; // Default limit for search results
 
 export async function searchPodcasts(query: string, offset: number = 0): Promise<ItunesResponsePodcast[] | undefined> {
   try {
-    query = decodeURIComponent(query.trim().replace(/-/g, " ")); // Decode and normalize the query
+    query = decodeURIComponent(query.trim().replace(/-/g, " "));
     console.time("Search Podcasts API Call");
     const resultsCached = await prisma.searchPodcast.findUnique({
       where: {
-        query: query + offset, // Unique key based on query and offset
+        query: query + offset,
       },
     });
     console.timeEnd("Search Podcasts API Call");
 
     if (resultsCached) {
-      const oneDayInMilliseconds = 24 * 60 * 60 * 1000; // 24 hours
+      const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
       const isCacheExpired = new Date().getTime() - new Date(resultsCached.updatedAt).getTime() > oneDayInMilliseconds;
 
       if (!isCacheExpired) {
         return resultsCached.Response ? JSON.parse(resultsCached.Response) : undefined;
-      } else {
-        await prisma.searchPodcast.delete({
-          where: {
-            query: query + offset,
-          },
-        });
       }
     }
 
     const fetchedPodcasts = await getPodcasts(query, offset);
 
-    await prisma.searchPodcast.create({
-      data: {
+    await prisma.searchPodcast.upsert({
+      where: {
+        query: query + offset,
+      },
+      update: {
+        Response: fetchedPodcasts ? JSON.stringify(fetchedPodcasts.results) : undefined,
+      },
+      create: {
         query: query + offset,
         Response: fetchedPodcasts ? JSON.stringify(fetchedPodcasts.results) : undefined,
       },
@@ -52,33 +52,33 @@ export async function searchPodcastEpisodes(
 ): Promise<ItunesResponseEpisode[] | undefined> {
   try {
     console.time("Search Podcast Episodes API Call");
-    query = decodeURIComponent(query.trim().replace(/-/g, " ")); // Decode and normalize the query
+    query = decodeURIComponent(query.trim().replace(/-/g, " "));
     const resultsCached = await prisma.searchPodcastEpisode.findUnique({
       where: {
-        query: query + offset, // Unique key based on query and offset
+        query: query + offset,
       },
     });
     console.timeEnd("Search Podcast Episodes API Call");
 
     if (resultsCached) {
-      const oneDayInMilliseconds = 24 * 60 * 60 * 1000; // 24 hours
+      const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
       const isCacheExpired = new Date().getTime() - new Date(resultsCached.updatedAt).getTime() > oneDayInMilliseconds;
 
       if (!isCacheExpired) {
         return resultsCached.Response ? JSON.parse(resultsCached.Response) : undefined;
-      } else {
-        await prisma.searchPodcastEpisode.delete({
-          where: {
-            query: query + offset,
-          },
-        });
       }
     }
 
     const fetchedEpisodes = await getPodcastEpisodes(query, offset);
 
-    await prisma.searchPodcastEpisode.create({
-      data: {
+    await prisma.searchPodcastEpisode.upsert({
+      where: {
+        query: query + offset,
+      },
+      update: {
+        Response: fetchedEpisodes ? JSON.stringify(fetchedEpisodes.results) : undefined,
+      },
+      create: {
         query: query + offset,
         Response: fetchedEpisodes ? JSON.stringify(fetchedEpisodes.results) : undefined,
       },
