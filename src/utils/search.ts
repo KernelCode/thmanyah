@@ -22,6 +22,12 @@ export async function searchPodcasts(query: string, offset: number = 0): Promise
 
       if (!isCacheExpired) {
         return resultsCached.Response ? JSON.parse(resultsCached.Response) : undefined;
+      } else {
+        await prisma.searchPodcast.delete({
+          where: {
+            query: query + offset,
+          },
+        });
       }
     }
 
@@ -60,6 +66,12 @@ export async function searchPodcastEpisodes(
 
       if (!isCacheExpired) {
         return resultsCached.Response ? JSON.parse(resultsCached.Response) : undefined;
+      } else {
+        await prisma.searchPodcastEpisode.delete({
+          where: {
+            query: query + offset,
+          },
+        });
       }
     }
 
