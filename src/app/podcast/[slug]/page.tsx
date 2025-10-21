@@ -10,7 +10,7 @@ import { notFound } from "next/navigation";
 
 export const revalidate = 3600;
 export const dynamic = "force-static";
-
+export const runtime = "edge";
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const slug = (await params).slug.trim().replace(/-/g, " ");
   let podcast: ItunesResponsePodcast | undefined;

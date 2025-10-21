@@ -13,7 +13,7 @@ import ErrorBoundary from "@/components/ErrorFallback";
 
 export const revalidate = 3600;
 export const dynamic = "force-static";
-
+export const runtime = "edge";
 export const metadata: Metadata = {
   title: "تجربة ثمانية",
   description: "استكشف البودكاست والحلقات على تجربة ثمانية.",
